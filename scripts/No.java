@@ -1,3 +1,4 @@
+package scripts;
 public class No {
   int valor;
   No noEsquerdo;

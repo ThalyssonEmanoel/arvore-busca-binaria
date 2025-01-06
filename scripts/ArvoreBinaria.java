@@ -1,3 +1,4 @@
+package scripts;
 public class ArvoreBinaria {
   private No raiz;
 
