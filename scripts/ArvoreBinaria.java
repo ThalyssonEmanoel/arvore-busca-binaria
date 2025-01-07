@@ -31,6 +31,20 @@ public class ArvoreBinaria {
     }
   }
 
+  public boolean buscar(int valor){
+    return buscarRecursivamente(raiz, valor);
+  }
+
+  private No buscarRecursivamente(No no, int valor){
+    if(no == null || no.valor == valor){
+      return no;
+    }
+    if(valor<no.valor){
+      return buscarRecursivamente(no.noEsquerdo, valor);
+    }
+    return buscarRecursivamente(no.noDireito, valor);
+  }
+
   public static void main(String[] args) {
     ArvoreBinaria arvore = new ArvoreBinaria();
     arvore.inserir(10);// raiz. Arrumar para que o usuário possa inserir a raiz e o outros valores por conta própria
@@ -44,6 +58,10 @@ public class ArvoreBinaria {
     System.out.println("A raiz é: " + arvore.raiz.valor);
     System.out.println("Percorrendo em ordem:");
     arvore.listar();
+
+    System.out.println("\nBusca de valores:");
+    System.out.println("Buscando o valor 12"+arvore.buscar(12));
+    System.out.println("Buscando o valor 15"+arvore.buscar(5));
   }
 }
 
