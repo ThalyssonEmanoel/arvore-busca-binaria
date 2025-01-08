@@ -1,4 +1,6 @@
 package scripts;
+import java.util.Scanner;
+
 public class ArvoreBinaria {
   private No raiz;
 
@@ -20,48 +22,69 @@ public class ArvoreBinaria {
   }
 
   public void listar() {
-    listarRecursivamente(raiz);
+    listarRecursivo(raiz);
   }
 
-  private void listarRecursivamente(No no) {
+  private void listarRecursivo(No no) {
     if (no != null) {
-      listarRecursivamente(no.noEsquerdo);
+      listarRecursivo(no.noEsquerdo);
       System.out.print(no.valor + " ");
-      listarRecursivamente(no.noDireito);
+      listarRecursivo(no.noDireito);
     }
   }
 
-  public boolean buscar(int valor){
-    return buscarRecursivamente(raiz, valor);
+  public Integer buscar(int valor) {
+    No resultado = buscarRecursivo(raiz, valor);
+    return resultado != null ? resultado.valor : null;
   }
 
-  private No buscarRecursivamente(No no, int valor){
-    if(no == null || no.valor == valor){
+  private No buscarRecursivo(No no, int valor) {
+    if (no == null || no.valor == valor) {
       return no;
     }
-    if(valor<no.valor){
-      return buscarRecursivamente(no.noEsquerdo, valor);
+    if (valor < no.valor) {
+      return buscarRecursivo(no.noEsquerdo, valor);
     }
-    return buscarRecursivamente(no.noDireito, valor);
+    return buscarRecursivo(no.noDireito, valor);
   }
 
   public static void main(String[] args) {
     ArvoreBinaria arvore = new ArvoreBinaria();
-    arvore.inserir(10);// raiz. Arrumar para que o usuário possa inserir a raiz e o outros valores por conta própria
-    arvore.inserir(5);
-    arvore.inserir(15);
-    arvore.inserir(3);
-    arvore.inserir(7);
-    arvore.inserir(12);
-    arvore.inserir(20);
+    Scanner scanner = new Scanner(System.in);
 
-    System.out.println("A raiz é: " + arvore.raiz.valor);
-    System.out.println("Percorrendo em ordem:");
+    System.out.print("Insira o valor da raiz: ");
+    int raiz = scanner.nextInt();
+    arvore.inserir(raiz);
+
+    System.out.println("Insira outros valores ou aperte -1 para sair:");
+    while (true) {
+      int valor = scanner.nextInt();
+      if (valor == -1) {
+        break;
+      }
+      arvore.inserir(valor);
+      System.out.println("Árvore atual:");
+      arvore.listar();
+      System.out.println();
+    }
+
+    System.out.println("Árvore final:");
     arvore.listar();
 
-    System.out.println("\nBusca de valores:");
-    System.out.println("Buscando o valor 12"+arvore.buscar(12));
-    System.out.println("Buscando o valor 15"+arvore.buscar(5));
+    while (true) {
+      System.out.print("\n\nInsira o número a ser buscado ou coloque -1 para encerrar: ");
+      int valorBusca = scanner.nextInt();
+      if (valorBusca == -1) {
+        break;
+      }
+      Integer resultado = arvore.buscar(valorBusca);
+      if (resultado != null) {
+        System.out.println("\nO número " + valorBusca + " existe na árvore.");
+      } else {
+        System.out.println("\nO número " + valorBusca + " não existe na árvore.");
+      }
+    }
+    scanner.close();
   }
 }
 
